@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
+  },
+  "exclude": [
+    //这个意思是@在node_modules 和dist文件夹下面是无法使用的
+    "node_modules",
+    "dist"
+  ]
+}

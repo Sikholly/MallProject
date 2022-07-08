@@ -8,8 +8,8 @@
                     <p>尚品汇欢迎您！</p>
                     <p>
                         <span>请</span>
-                        <router-link to="login"  href="###">登录</router-link >
-                        <router-link to="register"  href="###" class="register">免费注册</router-link >
+                        <router-link to="login" href="###">登录</router-link>
+                        <router-link to="register" href="###" class="register">免费注册</router-link>
                     </p>
                 </div>
                 <div class="typeList">
@@ -33,7 +33,7 @@
             </h1>
             <div class="searchArea">
                 <form action="###" class="searchForm">
-                    <input type="text" id="autocomplete" class="input-error input-xxlarge" />
+                    <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" />
                     <button @click="goSearch" class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
                 </form>
             </div>
@@ -43,13 +43,18 @@
 
 <script>
 export default {
-methods:{
-    // 搜索按钮回调函数,需要向search路由进行跳转
-    goSearch(){
-        if(this.$route.path!='/search') this.$router.push('/search')
-        else return;
+    data() {
+        return {
+            keyword: ""
+        }
+    },
+    methods: {
+        // 搜索按钮回调函数,需要向search路由进行跳转
+        // 跳转到当前路由会抛出NavigationDuplicated的警告错误  因为新版vue-router引入了promise 要有成功和失败两个回调(所以需要传入两个回调) 在router文件里面重写push方法解决
+        goSearch() {
+            this.$router.push({ name: 'search', query: {key:this.keyword} })
+        }
     }
-}
 }
 </script>
 

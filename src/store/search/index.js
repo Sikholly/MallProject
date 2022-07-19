@@ -7,7 +7,6 @@ Vue.use(VueX);
 
 // state:仓库存储数据的地方
 const state = {
-    b:2
 };
 // mutations:修改state的唯一手段
 const mutations= {};
@@ -16,11 +15,11 @@ const actions = {};
 // getters:理解为计算属性,可以简化仓库数据,让组件获取仓库数据更加方便
 const getters = {};
 
-//对外暴露Store类的一个实例
-export default new VueX.Store({
-    // state:{state},
+
+//对外暴露小仓库
+export default {
     state,
     mutations,
     actions,
-    getters,
-})
+    getters
+}

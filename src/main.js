@@ -6,7 +6,7 @@ import router from '@/router'
 import store from './store'
 
 // 全局组件三级
-import TypeNav from '@/pages/Home/TypeNav'
+import TypeNav from '@/components/TypeNav'
 
 import {reqCategoryList} from '@/api'
 console.log(reqCategoryList())

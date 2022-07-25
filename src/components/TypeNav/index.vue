@@ -7,32 +7,20 @@
         <div class="all-sort-list2">
           <!-- 鼠标移进去改变currentIndex的值 如果值==当前的index索引给元素添加 cur 类名 -->
           <!-- :class="{cur:currentIndex==index}  添加cur类名添加是currentIndex==index-->
-          <div
-            class="item"
-            v-for="(c1, index) in categoryList"
-            :key="c1.categoryId"
-            :class="{ cur: currentIndex == index }"
-            @mouseout="leaveIndex"
-          >
+          <div class="item" v-for="(c1, index) in categoryList" :key="c1.categoryId"
+            :class="{ cur: currentIndex == index }" @mouseout="leaveIndex">
             <h3 @mouseenter="changIndex(index)">
               <a href="">{{ c1.categoryName }}</a>
             </h3>
-            <div class="item-list clearfix" :style="{display: currentIndex == index ? 'block' : 'none'}">
-                <!-- :style="{display: currentIndex == index ? 'block' : 'none'}" 添加样式 还有样式条件  currentIndex == index的三元表达式-->
-              <div
-                class="subitem"
-                v-for="(c2) in c1.categoryChild"
-                :key="c2.categoryId"
-              >
+            <div class="item-list clearfix" :style="{ display: currentIndex == index ? 'block' : 'none' }">
+              <!-- :style="{display: currentIndex == index ? 'block' : 'none'}" 添加样式 还有样式条件  currentIndex == index的三元表达式-->
+              <div class="subitem" v-for="(c2) in c1.categoryChild" :key="c2.categoryId">
                 <dl class="fore">
                   <dt>
                     <a href="">{{ c2.categoryName }}</a>
                   </dt>
                   <dd>
-                    <em
-                      v-for="(c3) in c2.categoryChild"
-                      :key="c3.categoryId"
-                    >
+                    <em v-for="(c3) in c2.categoryChild" :key="c3.categoryId">
                       <a href="">{{ c3.categoryName }}</a>
                     </em>
                   </dd>
@@ -59,6 +47,8 @@
 
 <script>
 import { mapState } from "vuex";
+// lodash 全部功能引入 我们按需引入 引入节流
+import throttle from "lodash/throttle";
 export default {
   name: "TypeNav",
   data() {
@@ -80,9 +70,18 @@ export default {
     }),
   },
   methods: {
-    changIndex(index) {
+    // 没有使用节流
+    // changIndex(index) {
+    //   // 正常情况: 用户慢慢移动 每一个每一个来 都会触发
+    //   // 非正常情况: 用户鼠标进入速度过快 这种行为会导致浏览器反应不过来 如果里面有大量业务 有可能出现卡顿状态
+    //   this.currentIndex = index;
+    // },
+    // 使用lodash节流函数 lodash不推荐里面函数写箭头函数 this指向可能不正确  下面写法是使用es5对象函数写法 key value 写法 其他的都是ES6的写法
+    changIndex : throttle(function(index) {
       this.currentIndex = index;
-    },
+    }, 50),
+    //  上面ES5中的函数写法 key value 写法  下面是ES6的写法 
+    
     leaveIndex() {
       this.currentIndex = -1;
     },
@@ -204,11 +203,11 @@ export default {
             }
           }
 
-        //   &:hover {
-        //     .item-list {
-        //       display: block;
-        //     }
-        //   }
+          //   &:hover {
+          //     .item-list {
+          //       display: block;
+          //     }
+          //   }
         }
       }
     }
